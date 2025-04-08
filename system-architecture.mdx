@@ -1,0 +1,163 @@
+---
+title: System Architecture
+description: 'Technical architecture and components of the Global PRS system'
+---
+
+# System Architecture
+
+The Global PRS is built with a layered architecture that separates concerns and allows each component to scale independently. This design ensures stability, flexibility, and maintainability across the entire system.
+
+## Architecture Overview
+
+![Global PRS Architecture](/images/global-prs-architecture.png)
+
+## System Layers
+
+<AccordionGroup>
+  <Accordion title="Odoo Layer">
+    **Details:**
+    - **Program Setup:** Configures programs, including events, forms, pages, sections, and fields, with logic configuration managed through Odoo.
+    - **Registrations Viewing:** Handles registration submissions, where responses are stored as JSON objects with static fields. This allows for flexibility in managing dynamic form data.
+    
+    **Systems:**
+    - **Simplified Form Creation System:** Provides a templating system for forms and fields, enabling easy setup and reuse across programs.
+    - **Registrations Management System:** Manages participants, backend operations, and all aspects of program registrations and form submissions.
+  </Accordion>
+
+  <Accordion title="Database Layer">
+    **Technology:** PostgreSQL
+    
+    **Details:**
+    - The system's data is stored across multiple regions (DB Region 1, DB Region 2, DB Region 3, DB Region 4), with separate UAT databases for testing purposes (UAT DB: 1-4).
+    - Supports multi-region storage to improve resilience and availability.
+  </Accordion>
+
+  <Accordion title="Cache Layer">
+    **Technology:** Redis
+    
+    **Details:**
+    - **Storage Mechanism:** Stores key-value pairs where the key is a combination of ProgramID, FlowID, and FlowStepID.
+    - **Master Data:** Uses Redis lists to store cached master data, with backups and persistence options enabled to ensure data durability and recovery.
+  </Accordion>
+
+  <Accordion title="Worker Layer">
+    **Technology:** Celery
+    
+    **Details:**
+    - Handles asynchronous tasks, including delayed and scheduled tasks for updating the Odoo system and managing background processes.
+    - **Odoo RPC:** Uses remote procedure calls (RPC) to interact with the Odoo system, ensuring updates are processed efficiently in the background.
+  </Accordion>
+
+  <Accordion title="API Layer">
+    **Details:**
+    - Contains multiple layers, including:
+      - **Get API Layer:** Handles fetching data from the system for different forms and integrations.
+      - **Post API Layer:** Manages data submissions from participants or external systems.
+      - **Security Layer:** Ensures authentication and data protection.
+      - **Integrations:** Links external systems like ERP, VMS, and others with the core PRS platform, enabling seamless data flow.
+  </Accordion>
+
+  <Accordion title="Frontend Layer">
+    **Technology:** React with TypeScript (TS)
+    
+    **Details:**
+    - The frontend is powered by React, providing a dynamic and responsive user interface.
+    - Uses TypeScript to enhance code reliability and maintainability.
+    - **Rendering Engine:** Efficiently renders the forms and registration views, allowing users to interact with the system.
+    - **Theming:** Supports customizable theming to match the branding and user experience of the platform.
+  </Accordion>
+</AccordionGroup>
+
+## Database Structure
+
+The database is laid out to efficiently manage events (programs), registrations, and forms, with relationships connecting the event-related data to the forms and flows required for participant registration and management.
+
+![Database Structure](/images/database-structure.png)
+
+### Database Layout and Relationships
+
+- **Event Model**: Central to the database, connected to multiple tables like EventFlow, EventTicket, EventCategory, etc., through one-to-many relationships.
+- **EventFlow and EventFlowStep**: Define the participant flow for an event, with each EventFlow containing multiple EventFlowStep records.
+- **Form Models**: Organize the structure of forms, with FormForm containing pages (FormPage), and pages containing sections (FormSection). Sections hold fields (FormField), and fields may have associated choices.
+- **Registration Data**: Captured via the EventRegistrationMixin, connecting participant details to events and flows.
+
+For detailed database documentation, visit: [PRS Database Documentation](https://dbdocs.io/darshika.joshi/PRS)
+
+## Technology Stack
+
+| System | Technology | Version | Deployment |
+|--------|------------|---------|------------|
+| Database | PostgreSQL | 16.4 | AWS RDS (Managed) |
+| API | Litestar | 2.21.1 | AWS ECS (Docker) |
+| Backend | Odoo | 17.0 | CloudPepper (Managed) |
+| Frontend | React | 18.3.1 | Netlify (yarn) |
+| Worker | Celery | 5.4.0 | AWS ECS (Docker) |
+| Cache | Redis | 5.1.0 | AWS EC2 (Docker) |
+
+## DevOps Infrastructure
+
+The Global PRS uses a comprehensive DevOps setup to ensure reliable deployment, monitoring, and maintenance.
+
+![DevOps Infrastructure](/images/devops-infrastructure.jpg)
+
+### Additional Systems
+
+- **Datadog**: For audit logging and monitoring
+- **Mixpanel**: For analytics tracking
+- **Freshdesk**: For support ticket management
+- **ClickUp**: For project management
+- **OpenAPI**: For API documentation generated by Litestar
+- **AWS S3**: For artifact storage
+- **Jenkins**: For CI/CD pipelines
+
+## Security Architecture
+
+Security is a critical aspect of the Global PRS, with multiple layers of protection to ensure data integrity and user privacy.
+
+<Steps>
+  <Step title="Authentication">
+    - **JWT (JSON Web Tokens):** Issue signed JWTs for secure, stateless authentication between clients and the API.
+    - **Role-based Access Control (RBAC):** Implement RBAC to restrict access based on the user's role or permissions.
+  </Step>
+  <Step title="API Gateway">
+    - **Rate Limiting and Throttling:** Limit the number of requests from a client to prevent abuse (DDoS protection).
+    - **Load Balancing:** Distribute traffic across multiple API instances for stability and high availability.
+    - **IP Whitelisting/Blacklisting:** Restrict access to the API based on IP addresses or ranges.
+  </Step>
+  <Step title="Data Encryption">
+    - **Transport Layer Security (TLS/SSL):** Enforce HTTPS to ensure data is encrypted during transit.
+    - **Data Encryption at rest & transport (optional):** For sensitive data like Aadhaar card information.
+  </Step>
+  <Step title="Input Validation">
+    - **Input Validation:** Strictly validate incoming API requests for expected data types, lengths, and formats.
+    - **Cross-Site Scripting (XSS) Prevention:** Escape or sanitize data that might be reflected back to the user.
+    - **Cross-Site Request Forgery (CSRF) Protection:** Implement CSRF tokens for APIs that modify state.
+  </Step>
+  <Step title="Audit Logging">
+    - **Access Logs:** Log every API request with details like IP address, user-agent, user ID, endpoint accessed, and time.
+    - **Audit Trails:** Keep logs of sensitive operations for accountability and tracking.
+  </Step>
+</Steps>
+
+### Security Tools
+
+- **Isha SSO**: For login and authentication
+- **Cloud-flare**: For Web Application Firewall (WAF)
+- **DataDog**: For audit, logging, and monitoring
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="User Types" icon="users" href="/user-types/system-configurator">
+    Learn about the different user roles and their responsibilities in the Global PRS system
+  </Card>
+  <Card title="Fundamental Modules" icon="cubes" href="/modules/overview">
+    Explore the core modules that make up the Global PRS system
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference">
+    Review the API documentation for integrating with the Global PRS system
+  </Card>
+  <Card title="Security Details" icon="shield" href="/security/overview">
+    Dive deeper into the security features of the Global PRS system
+  </Card>
+</CardGroup>

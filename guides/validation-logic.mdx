@@ -1,0 +1,207 @@
+# Validation Logic
+
+The Global PRS system uses a combination of JEXL expressions and regex patterns for field validation and dynamic behavior. This guide explains how to implement and use these validation mechanisms.
+
+## JEXL Expressions
+
+### 1. Basic Syntax
+```javascript
+// Check if age is over 18
+{age} >= 18
+
+// Check if country is in allowed list
+['US', 'UK', 'IN'].contains({country})
+
+// Check if email domain is valid
+{email}.endsWith('@isha.org')
+```
+
+### 2. Common Operations
+- Comparison: `==`, `!=`, `>`, `<`, `>=`, `<=`
+- Logical: `&&`, `||`, `!`
+- String: `.contains()`, `.startsWith()`, `.endsWith()`
+- Array: `.contains()`, `.length()`
+
+## Field Validation
+
+### 1. Basic Configuration
+```json
+{
+  "field": {
+    "id": "email",
+    "type": "email",
+    "validation": {
+      "required": true,
+      "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+      "message": "Please enter a valid email address"
+    }
+  }
+}
+```
+
+### 2. Validation Types
+- Required fields
+- Pattern matching
+- Range validation
+- Custom validation
+- Cross-field validation
+
+## Expression Examples
+
+### 1. Conditional Display
+```javascript
+// Show address fields if shipping is required
+{requiresShipping} == true
+
+// Show health declaration for specific programs
+{program.type} == 'health' && {age} >= 18
+
+// Show additional fields based on country
+{country} == 'US' || {country} == 'CA'
+```
+
+### 2. Field Dependencies
+```javascript
+// Enable payment if amount is greater than zero
+{amount} > 0
+
+// Show refund fields if status is cancelled
+{status} == 'cancelled' && {paymentStatus} == 'completed'
+
+// Enable submit based on form completion
+{personalInfo.complete} && {termsAccepted}
+```
+
+## Regex Patterns
+
+### 1. Common Patterns
+```javascript
+// Phone number (international)
+"^\\+[1-9]\\d{1,14}$"
+
+// Email address
+"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+
+// Date (YYYY-MM-DD)
+"^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+```
+
+### 2. Country-Specific
+```javascript
+// US Phone
+"^\\+1[2-9]\\d{9}$"
+
+// UK Phone
+"^\\+44[1-9]\\d{9}$"
+
+// Indian Phone
+"^\\+91[6-9]\\d{9}$"
+```
+
+## Validation Rules
+
+### 1. Field Rules
+```json
+{
+  "validation": {
+    "rules": [
+      {
+        "field": "phone",
+        "pattern": "^\\+[1-9]\\d{1,14}$",
+        "message": "Please enter a valid phone number",
+        "condition": "{country} != null"
+      }
+    ]
+  }
+}
+```
+
+### 2. Form Rules
+```json
+{
+  "form": {
+    "validation": {
+      "cross_field": [
+        {
+          "expression": "{endDate} > {startDate}",
+          "message": "End date must be after start date"
+        }
+      ]
+    }
+  }
+}
+```
+
+## Error Messages
+
+### 1. Message Templates
+```json
+{
+  "messages": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "phone": "Please enter a valid phone number for {country}",
+    "date": "Please enter a valid date in YYYY-MM-DD format"
+  }
+}
+```
+
+### 2. Dynamic Messages
+```javascript
+// Age restriction message
+"Must be {minAge} years or older"
+
+// Length restriction
+"Must be between {min} and {max} characters"
+
+// Value range
+"Please enter a value between {min} and {max}"
+```
+
+## Best Practices
+
+### 1. Validation Design
+- Clear error messages
+- Progressive validation
+- Helpful suggestions
+- Graceful handling
+- User feedback
+
+### 2. Performance
+- Optimize expressions
+- Cache results
+- Minimize dependencies
+- Handle timeouts
+- Error recovery
+
+## Testing
+
+### 1. Test Cases
+- Required fields
+- Pattern matching
+- Cross-field validation
+- Error messages
+- Edge cases
+
+### 2. Validation Testing
+```javascript
+// Test phone number validation
+test('phone_validation', {
+  input: '+1234567890',
+  country: 'US',
+  expected: true
+})
+
+// Test email validation
+test('email_validation', {
+  input: 'user@isha.org',
+  expected: true
+})
+```
+
+## Next Steps
+
+- Study [JEXL Expressions](/guides/jexl-expressions)
+- Learn [Regex Patterns](/guides/regex-patterns)
+- Explore [Form Creation](/modules/forms/creation)
+- Review [Field Types](/modules/fields/types)

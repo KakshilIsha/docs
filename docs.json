@@ -1,102 +1,70 @@
 {
   "$schema": "https://mintlify.com/docs.json",
+  "name": "Global PRS Documentation",
+  "logo": "logo/whitelogo-small.png",
   "theme": "mint",
-  "name": "Mint Starter Kit",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#FF7F00",
+    "light": "#FFA64D",
+    "dark": "#CC6600"
   },
-  "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Global PRS",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Getting Started",
             "pages": [
               "introduction",
-              "quickstart",
-              "development"
+              "system-architecture"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "User Types",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "user-types/system-configurator",
+              "user-types/template-designer",
+              "user-types/program-operator"
+            ]
+          },
+          {
+            "group": "Core Modules",
+            "pages": [
+              "modules/overview",
+              "modules/programs",
+              "modules/flows",
+              "modules/forms",
+              "modules/fields"
+            ]
+          },
+          {
+            "group": "Templates & Masters",
+            "pages": [
+              "modules/templates",
+              "modules/masters"
+            ]
+          },
+          {
+            "group": "Integration",
+            "pages": [
+              "integrations/overview",
+              "integrations/iso-website",
+              "integrations/mymedic"
+            ]
+          },
+          {
+            "group": "Security",
+            "pages": [
+              "security/overview"
             ]
           }
         ]
       },
       {
         "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
+        "openapi": "api-reference/openapi.json"
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+    ]
   }
 }

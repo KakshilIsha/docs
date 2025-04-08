@@ -1,0 +1,220 @@
+# Creating a Program
+
+This guide walks through the process of creating a new program in the Global PRS system, from initial setup to program launch.
+
+## Program Creation Process
+
+### 1. Prerequisites
+- Program template access
+- Required master data
+- Program details
+- Venue information
+- Schedule details
+
+### 2. Basic Setup
+```json
+{
+  "program": {
+    "name": "Inner Engineering",
+    "type": "workshop",
+    "template": "ie_workshop_template",
+    "schedule": {
+      "startDate": "2025-05-01",
+      "endDate": "2025-05-07",
+      "timezone": "Asia/Kolkata"
+    },
+    "venue": {
+      "id": "bangalore_center",
+      "capacity": 100
+    }
+  }
+}
+```
+
+## Configuration Steps
+
+### 1. Basic Information
+1. Select program template
+2. Enter program name
+3. Set program dates
+4. Choose venue
+5. Set capacity
+
+### 2. Registration Setup
+1. Configure registration period
+2. Set up pricing tiers
+3. Define payment options
+4. Set cancellation policy
+5. Configure waitlist
+
+### 3. Form Configuration
+1. Review form sections
+2. Customize fields
+3. Set validations
+4. Configure display logic
+5. Test form flow
+
+## Program Settings
+
+### 1. Basic Settings
+```json
+{
+  "settings": {
+    "registration": {
+      "startDate": "2025-04-01",
+      "endDate": "2025-04-30",
+      "allowWaitlist": true,
+      "maxWaitlist": 50
+    },
+    "payment": {
+      "currency": "INR",
+      "amount": 5000,
+      "earlyBird": {
+        "amount": 4500,
+        "endDate": "2025-04-15"
+      }
+    }
+  }
+}
+```
+
+### 2. Advanced Settings
+- Communication templates
+- Notification rules
+- Integration settings
+- Access permissions
+- Custom fields
+
+## Program Flow
+
+### 1. Registration Flow
+1. Form submission
+2. Validation
+3. Payment processing
+4. Confirmation
+5. Communication
+
+### 2. Management Flow
+1. Review registrations
+2. Process payments
+3. Handle modifications
+4. Manage waitlist
+5. Send updates
+
+## Integration Setup
+
+### 1. Website Display
+```json
+{
+  "display": {
+    "website": {
+      "enabled": true,
+      "featured": true,
+      "displayOrder": 1,
+      "categories": ["workshop", "featured"]
+    }
+  }
+}
+```
+
+### 2. External Systems
+- ISO website sync
+- Payment gateway
+- CRM integration
+- Email system
+- Analytics
+
+## Testing & Validation
+
+### 1. Test Cases
+- Form submission
+- Payment processing
+- Email notifications
+- Waitlist handling
+- Error scenarios
+
+### 2. Validation Steps
+1. Test registration flow
+2. Verify payments
+3. Check notifications
+4. Test modifications
+5. Validate reports
+
+## Launch Checklist
+
+### 1. Pre-launch
+- [ ] Program details complete
+- [ ] Forms configured
+- [ ] Payments setup
+- [ ] Integrations tested
+- [ ] Team notified
+
+### 2. Launch Steps
+1. Enable registration
+2. Monitor initial registrations
+3. Check system performance
+4. Handle early issues
+5. Update stakeholders
+
+## Monitoring
+
+### 1. Registration Metrics
+```json
+{
+  "metrics": {
+    "tracking": [
+      "registration_count",
+      "payment_status",
+      "waitlist_count",
+      "conversion_rate",
+      "form_completion"
+    ]
+  }
+}
+```
+
+### 2. System Health
+- API performance
+- Form submissions
+- Payment processing
+- Integration status
+- Error rates
+
+## Best Practices
+
+### 1. Setup
+- Use templates
+- Test thoroughly
+- Monitor closely
+- Document changes
+- Regular backups
+
+### 2. Management
+- Regular updates
+- Quick response
+- Clear communication
+- Data accuracy
+- Team coordination
+
+## Troubleshooting
+
+### 1. Common Issues
+- Form errors
+- Payment failures
+- Integration issues
+- Capacity problems
+- System errors
+
+### 2. Resolution Steps
+1. Check logs
+2. Verify configuration
+3. Test functionality
+4. Contact support
+5. Update documentation
+
+## Next Steps
+
+- Learn about [Program Management](/modules/programs/management)
+- Study [Template Creation](/guides/creating-template)
+- Review [Integration Setup](/integrations/overview)
+- Explore [Form Configuration](/modules/forms/creation)

@@ -1,0 +1,211 @@
+---
+title: System Configurator
+description: 'Role and responsibilities of a System Configurator in Global PRS'
+---
+
+# System Configurator
+
+A System Configurator is responsible for setting up and maintaining the core configuration of the Global PRS system. This role requires a deep understanding of both the technical aspects and business requirements of the program registration system.
+
+## Role Overview
+
+System Configurators are typically members of the IT team or highly technical program administrators who:
+- Configure system-wide settings and integrations
+- Manage master data and templates
+- Set up and maintain security configurations
+- Monitor system performance and health
+
+## Key Responsibilities
+
+<AccordionGroup>
+  <Accordion title="System Configuration">
+    - Set up and maintain system-wide configurations
+    - Configure integration settings with external systems (e.g., Ishangam, ERP)
+    - Manage API credentials and security settings
+    - Configure email servers and notification settings
+    - Set up payment gateways and processing rules
+  </Accordion>
+
+  <Accordion title="Master Data Management">
+    - Maintain master data tables (countries, states, currencies, etc.)
+    - Configure program categories and types
+    - Set up inventory management rules
+    - Manage user roles and permissions
+  </Accordion>
+
+  <Accordion title="Template Management">
+    - Create and maintain program templates
+    - Set up form templates for different program types
+    - Configure validation rules and expressions
+    - Manage email templates and notification rules
+  </Accordion>
+
+  <Accordion title="Security Administration">
+    - Manage user access and permissions
+    - Configure authentication methods
+    - Set up API security rules
+    - Monitor security logs and audit trails
+  </Accordion>
+</AccordionGroup>
+
+## Required Skills
+
+<CardGroup cols={2}>
+  <Card title="Technical Knowledge" icon="code">
+    - Understanding of system architecture
+    - Knowledge of databases and data structures
+    - Familiarity with API concepts
+    - Basic scripting abilities
+  </Card>
+  <Card title="Business Understanding" icon="briefcase">
+    - Knowledge of program registration workflows
+    - Understanding of business rules and requirements
+    - Familiarity with compliance requirements
+  </Card>
+  <Card title="System Administration" icon="gear">
+    - Experience with configuration management
+    - Understanding of security principles
+    - Knowledge of system monitoring
+  </Card>
+  <Card title="Problem Solving" icon="puzzle-piece">
+    - Analytical thinking
+    - Attention to detail
+    - Ability to troubleshoot issues
+  </Card>
+</CardGroup>
+
+## Access and Permissions
+
+System Configurators have access to:
+
+<Steps>
+  <Step title="Backend Administration">
+    Full access to the Odoo admin panel at:
+    ```
+    https://prs-admin.sadhguru.org/web
+    ```
+  </Step>
+  <Step title="Configuration Sections">
+    Access to all configuration sections including:
+    - System Settings
+    - Master Data
+    - Templates
+    - Security Settings
+  </Step>
+  <Step title="Monitoring Tools">
+    Access to:
+    - Datadog dashboards
+    - System logs
+    - Performance metrics
+    - Error reports
+  </Step>
+  <Step title="Integration Management">
+    Access to:
+    - API configurations
+    - Integration settings
+    - External system connections
+  </Step>
+</Steps>
+
+## Common Tasks
+
+### Setting Up a New Program Type
+
+<Steps>
+  <Step title="Create Program Category">
+    1. Navigate to Masters > Program Categories
+    2. Click "Create New Category"
+    3. Fill in category details
+    4. Configure category-specific settings
+  </Step>
+  <Step title="Configure Templates">
+    1. Go to Templates > Program Templates
+    2. Create new template for the program type
+    3. Set up associated form templates
+    4. Configure validation rules
+  </Step>
+  <Step title="Set Up Integration Rules">
+    1. Navigate to System Settings > Integrations
+    2. Configure data mapping rules
+    3. Set up notification triggers
+    4. Test integration flow
+  </Step>
+  <Step title="Define Access Rules">
+    1. Go to Security > Access Rules
+    2. Set up role-based permissions
+    3. Configure approval workflows
+    4. Test access controls
+  </Step>
+</Steps>
+
+### Managing Master Data
+
+<CodeGroup>
+  ```sql SQL Query Example
+  -- Example of master data query
+  SELECT 
+    id, name, code, is_active
+  FROM 
+    master_program_types
+  WHERE 
+    is_active = true
+  ORDER BY 
+    name;
+  ```
+
+  ```python Python Script Example
+  # Example of master data update script
+  def update_master_data(data):
+      for item in data:
+          master_record = MasterData.search([
+              ('code', '=', item['code'])
+          ])
+          if master_record:
+              master_record.write({
+                  'name': item['name'],
+                  'is_active': item['active']
+              })
+  ```
+</CodeGroup>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Documentation" icon="book">
+    - Document all configuration changes
+    - Maintain change logs
+    - Keep configuration guides updated
+  </Card>
+  <Card title="Testing" icon="vial">
+    - Test configurations in UAT first
+    - Validate changes before production
+    - Perform regular health checks
+  </Card>
+  <Card title="Security" icon="shield">
+    - Follow security protocols
+    - Regular permission audits
+    - Monitor access logs
+  </Card>
+  <Card title="Backup" icon="database">
+    - Regular configuration backups
+    - Version control for templates
+    - Disaster recovery plans
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Template Designer Role" icon="palette" href="/user-types/template-designer">
+    Learn about the Template Designer role and how they work with System Configurators
+  </Card>
+  <Card title="Program Operator Role" icon="users" href="/user-types/program-operator">
+    Understand how Program Operators use the configurations you set up
+  </Card>
+  <Card title="System Architecture" icon="sitemap" href="/system-architecture">
+    Review the technical architecture that you'll be configuring
+  </Card>
+  <Card title="Implementation Guides" icon="book" href="/guides/configuring-masters">
+    Follow detailed guides for common configuration tasks
+  </Card>
+</CardGroup>

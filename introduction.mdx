@@ -1,71 +1,140 @@
 ---
-title: Introduction
-description: "Welcome to the home of your new documentation"
+title: Global PRS Overview
+description: 'Welcome to the Global Program Registration System (Global PRS) Documentation'
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+# Global Program Registration System (Global PRS)
 
-## Setting up
+## Overview
 
-The first step to world-class documentation is setting up your editing environments.
+The primary goal behind building the Global PRS was to have all Isha programs under one system. To achieve this, we focused on two key factors: stability and flexibility.
+
+The system is designed to be stable enough for global systems to use it and provide consistent performance, while being flexible enough to handle all different features required across regions.
+
+Built in a highly modular fashion, Global PRS ensures each component can be managed and scaled independently, while allowing programs to be fully customizable by the business teams.
+
+## Primary Users
 
 <CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
+  <Card title="Participants" icon="user">
+    People who register for the programs
   </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
+  <Card title="Program Setup Team" icon="gear">
+    Team which sets up the program (can also be Volunteers/Coordinators)
+  </Card>
+  <Card title="Volunteers/Coordinators" icon="users">
+    Team executing the program (Ground Volunteers, Ishangas, Check-in Volunteers)
+  </Card>
+  <Card title="Marketing, Finance & Legal Teams" icon="chart-line">
+    Supporting teams involved with the program
   </Card>
 </CardGroup>
 
-## Make it yours
+## Key Points
 
-Update your docs to your brand and add valuable content for the best user conversion.
+<AccordionGroup>
+  <Accordion title="Layered Architecture">
+    The system separates concerns by dividing functionalities into distinct layers—API, frontend, Odoo backend, and database. This ensures that each layer can scale independently and leverage its unique strengths.
+  </Accordion>
+  <Accordion title="Modular Design">
+    Components are designed to be generic and modular. This modularity allows for updates or changes in one part of the system without necessitating a complete overhaul, enhancing maintainability and efficiency.
+  </Accordion>
+  <Accordion title="Scalability">
+    The architecture allows for horizontal scaling, particularly in the API layer, to handle increased load without stressing the Odoo systems.
+  </Accordion>
+  <Accordion title="Decoupled Workers">
+    Odoo workers are decoupled from the Odoo server, providing the flexibility to integrate other platforms for backend jobs in the future.
+  </Accordion>
+  <Accordion title="Integration Layer">
+    A separate external layer handles all integrations, allowing teams to build and manage necessary connections with other systems independently.
+  </Accordion>
+  <Accordion title="Security">
+    Enhanced security measures are enforced at the API layer to ensure that only authorized systems can submit forms and access data.
+  </Accordion>
+</AccordionGroup>
+
+## Guiding Principles
+
+<CardGroup cols={3}>
+  <Card title="Participant-First Approach" icon="user-check">
+    Focus on participant needs when designing all aspects of the system, including what volunteers need to help participants.
+  </Card>
+  <Card title="Simple and Clean Experience" icon="wand-magic-sparkles">
+    Ensure the system is intuitive and easy to navigate, requiring minimal orientation for new internal users.
+  </Card>
+  <Card title="Stability & Scale" icon="server">
+    The system should be able to scale up while staying stable and performing reliably.
+  </Card>
+</CardGroup>
+
+## Technology Stack
 
 <CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
+  <Card title="Management System" icon="cogs">
+    Odoo/Python
   </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
+  <Card title="Database" icon="database">
+    PostgreSQL
   </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
+  <Card title="Cache" icon="bolt">
+    Redis
   </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
+  <Card title="API" icon="code">
+    Litestar/Python (Earlier Gin/Go)
+  </Card>
+  <Card title="Frontend" icon="window">
+    React/TypeScript
+  </Card>
+  <Card title="Workers" icon="gears">
+    Celery/Python
+  </Card>
+</CardGroup>
+
+## Sample Data Flow
+
+<Steps>
+  <Step title="Program Setup in Odoo">
+    Business team configures programs (forms, flows, fields) in Odoo, and the data is stored in PostgreSQL.
+  </Step>
+  <Step title="Pushing to Cache">
+    Once saved, the form configurations are cached in Redis, reducing database queries and speeding up access.
+  </Step>
+  <Step title="Fetching Configurations via API">
+    When a user accesses the registration form, the API retrieves the configuration from Redis and sends it to the frontend.
+  </Step>
+  <Step title="Rendering the Form">
+    The frontend dynamically renders the form using the JSON configuration, providing a flexible and responsive interface.
+  </Step>
+  <Step title="Form Submission">
+    Users fill out the form and submit it. The submission is sent to the API, with security measures like authentication for private APIs and WAF for public ones.
+  </Step>
+  <Step title="Data Saved to Database">
+    The API processes the submission, storing basic info in PostgreSQL tables and dynamic responses as JSON.
+  </Step>
+  <Step title="View Registrations in Odoo">
+    Program teams can immediately access submissions in Odoo and perform necessary actions.
+  </Step>
+  <Step title="Delayed Tasks via Workers">
+    Tasks like sending confirmation emails or updating external systems are handled by Celery workers asynchronously.
+  </Step>
+  <Step title="Connected Apps">
+    Other apps (e.g., MyMedic) use the same API to render forms and manage registrations.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="User Types" icon="users" href="/user-types/system-configurator">
+    Learn about the different user roles and their responsibilities in the Global PRS system
+  </Card>
+  <Card title="System Architecture" icon="sitemap" href="/system-architecture">
+    Understand the technical architecture and components of the Global PRS system
+  </Card>
+  <Card title="Fundamental Modules" icon="cubes" href="/modules/overview">
+    Explore the core modules that make up the Global PRS system
+  </Card>
+  <Card title="Implementation Guides" icon="book" href="/guides/creating-program">
+    Follow step-by-step guides to implement and use the Global PRS system
   </Card>
 </CardGroup>

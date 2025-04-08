@@ -1,0 +1,192 @@
+# Forms
+
+Forms are the primary interface for collecting participant information in the Global PRS system. This section covers form structure, configuration, and best practices for form creation and management.
+
+## Form Structure
+
+### 1. Basic Components
+- Form metadata
+- Sections
+- Fields
+- Validation rules
+- Display conditions
+
+### 2. Form Example
+```json
+{
+  "formId": "program_registration",
+  "version": "1.0",
+  "title": "Program Registration Form",
+  "sections": [
+    {
+      "id": "personal_info",
+      "title": "Personal Information",
+      "fields": [
+        {
+          "id": "full_name",
+          "type": "text",
+          "required": true,
+          "validation": "^[a-zA-Z ]{2,50}$"
+        },
+        {
+          "id": "email",
+          "type": "email",
+          "required": true,
+          "validation": "email"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Form Types
+
+### 1. Registration Forms
+- Basic registration
+- Health declaration
+- Program-specific forms
+- Event registration
+
+### 2. Administrative Forms
+- Program setup
+- Template configuration
+- User management
+- System configuration
+
+### 3. Special Forms
+- Health assessment
+- Feedback collection
+- Survey forms
+- Evaluation forms
+
+## Form Features
+
+### 1. Dynamic Behavior
+- Conditional field display
+- Dynamic validation rules
+- Calculated fields
+- Dependent field logic
+
+### 2. Data Validation
+- Field-level validation
+- Cross-field validation
+- Custom validation rules
+- Error messaging
+
+### 3. User Experience
+- Progressive disclosure
+- Inline validation
+- Error handling
+- Help text support
+
+## Form Configuration
+
+### 1. Field Types
+- Text input
+- Number input
+- Date picker
+- Select dropdown
+- Radio buttons
+- Checkboxes
+- File upload
+- Custom fields
+
+### 2. Validation Rules
+- Required fields
+- Pattern matching
+- Range validation
+- Custom validation
+- Cross-field validation
+
+### 3. Display Logic
+- Conditional visibility
+- Field dependencies
+- Section toggling
+- Dynamic options
+
+## Best Practices
+
+### 1. Form Design
+- Logical field grouping
+- Clear labeling
+- Consistent layout
+- Progressive disclosure
+- Mobile responsiveness
+
+### 2. Validation
+- Immediate feedback
+- Clear error messages
+- Helpful suggestions
+- Graceful error handling
+
+### 3. Performance
+- Optimize field count
+- Minimize dependencies
+- Efficient validation
+- Quick load times
+
+## Form States
+
+### 1. Data States
+- Empty
+- Partially filled
+- Complete
+- Invalid
+- Submitted
+
+### 2. UI States
+- Initial load
+- In progress
+- Validation error
+- Submission pending
+- Success/Error
+
+## Form Management
+
+### 1. Version Control
+- Form versioning
+- Change tracking
+- Migration support
+- Version compatibility
+
+### 2. Maintenance
+- Form updates
+- Field modifications
+- Validation updates
+- Performance monitoring
+
+## Security Considerations
+
+### 1. Data Protection
+- Input sanitization
+- XSS prevention
+- CSRF protection
+- Data encryption
+
+### 2. Access Control
+- Field-level permissions
+- Form access control
+- Data visibility rules
+- Audit logging
+
+## Integration
+
+### 1. External Systems
+- Data export
+- API integration
+- Third-party forms
+- Custom endpoints
+
+### 2. Internal Systems
+- Database storage
+- Cache management
+- Worker processes
+- Notification system
+
+## Next Steps
+
+- Learn about [Form Creation](/modules/forms/creation)
+- Understand [Form Validation](/modules/forms/validation)
+- Explore [Field Types](/modules/fields/types)
+- Study [Field Expressions](/modules/fields/expressions)
